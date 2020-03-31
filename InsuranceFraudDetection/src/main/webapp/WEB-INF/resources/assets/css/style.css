@@ -26,12 +26,26 @@ h1, h2, h3, h4, h5, h6, .font-primary {
   font-family: "Roboto", sans-serif;
 }
 
+
+/*--------------------------------------------------------------
+# Board
+--------------------------------------------------------------*/
+.boardContainer {
+	width:60%;
+	padding:50px 20px;
+    position:relative;
+    top:50%;
+    left:50%;
+    margin-top:-0.5em;
+    margin-left:-50%;
+}
+
 /*--------------------------------------------------------------
 # Back to top button
 --------------------------------------------------------------*/
 .back-to-top {
   position: fixed;
-  display: none;
+  display: none; 
   width: 40px;
   height: 40px;
   border-radius: 3px;
