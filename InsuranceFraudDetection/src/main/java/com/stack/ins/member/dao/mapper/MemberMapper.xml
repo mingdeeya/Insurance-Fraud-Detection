@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+   
+ <mapper namespace="com.stack.ins.member.dao.IMemberRepository">
+	<!--                       INSERT                      -->
+	
+	<!-- 회원 가입 시키기  -->
+ 	<insert id="insertMember" parameterType="com.stack.ins.member.model.Member">
+ 		<![CDATA[
+			INSERT INTO MEMBER
+			(USERID, NAME, PASSWORD, EMAIL, PHONE, DELETECOUNT)
+			VALUES(#{userid}, #{name}, #{password}, #{email}, #{phone}, 0)	
+ 		]]>
+ 	</insert>
+ 	
+ 	
+ 	<!--                		 SELECT                    -->
+ 	<!-- 특정 회원 조회하기 -->
+ 	<select id="selectMember" parameterType="string" resultType="com.stack.ins.member.model.Member">
+ 		<![CDATA[
+			SELECT 
+			    USERID,
+			    NAME,
+			    PASSWORD,
+			    EMAIL,
+			    PHONE,
+			    DELETECOUNT
+			FROM MEMBER
+			WHERE USERID = #{userid}
+ 		
+ 		]]>
+ 	</select>
+ 	<!-- 모든 회원 조회하기  -->
+ 	<select id="selectAllMembers" resultType="com.stack.ins.member.model.Member">
+ 		<![CDATA[ 
+			SELECT 
+			    USERID,
+			    NAME,
+			    PASSWORD,
+			    EMAIL,
+			    PHONE,
+			    DELETECOUNT
+			FROM MEMBER 	
+ 		]]>
+ 	</select>	
+ 	<!-- 패스워드 찾기 -->
+ 	<select id="getPassword" parameterType="string" resultType="int">
+ 		<![CDATA[ 
+			SELECT
+			    PASSWORD
+			FROM MEMBER
+			WHERE USERID=#{userid} 		
+ 		]]> 	
+ 	</select>
+ 	<!-- DB에서 삭제되지 않은 회원 정보 가져오기  -->
+ 	<select id="getDeleteMember" resultType="com.stack.ins.member.model.Member">
+ 		<![CDATA[
+			SELECT
+			    USERID,
+			    NAME,
+			    PASSWORD,
+			    EMAIL,
+			    PHONE,
+			    DELETECOUNT
+			FROM MEMBER
+			WHERE DELETECOUNT =1 			
+ 		]]>
+ 	</select>
+ 	
+ 	
+ 	
+ 	<!--                           UPDATE                      -->
+ 	<!-- 회원 정보 수정하기  -->
+ 	<update id="updateMember" parameterType="com.stack.ins.member.model.Member">
+ 		<![CDATA[ 
+			SET
+			    NAME =#{name},
+			    PASSWORD =#{password},
+			    PHONE =#{phone},
+			    EMAIL =#{email}
+			WHERE
+			    USERID =#{userid}	
+ 		]]> 	
+ 	</update>
+ 	<!--             회원 삭제하기 (DB 에서는 삭제 하지 않음) for 복구를 위함 -->
+	<update id="saveDeleteMember" parameterType="com.stack.ins.member.model.Member">
+ 		<![CDATA[ 
+			UPDATE MEMBER 
+			SET
+			  DELETECOUNT =1
+			WHERE 
+			  USERID = #{userid} 			
+ 		]]>	
+	</update>
+ 	 
+ 	<!--                             DELETE                  -->
+	<delete id="deleteMember" parameterType="com.stack.ins.member.model.Member">
+ 		<![CDATA[ 
+			DELETE FROM MEMBER
+			WHERE USERID = #{userid} 		
+ 		]]>	
+	</delete>
+	
+	
+	
+	
+
+	
+ 	
+ 	
+ 	
+ </mapper>
