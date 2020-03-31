@@ -4,7 +4,7 @@
 
    
  <mapper namespace="com.stack.ins.member.dao.IMemberRepository">
-	<!--                       insert                      -->
+	<!--                       INSERT                      -->
 	
 	<!-- 회원 가입 시키기  -->
  	<insert id="insertMember" parameterType="com.stack.ins.member.model.Member">
@@ -16,8 +16,8 @@
  	</insert>
  	
  	
- 	<!--                 SELECT                          -->
- 	<!--     특정 회원 조회하기  -->
+ 	<!--                		 SELECT                    -->
+ 	<!-- 특정 회원 조회하기 -->
  	<select id="selectMember" parameterType="string" resultType="com.stack.ins.member.model.Member">
  		<![CDATA[
 			SELECT 

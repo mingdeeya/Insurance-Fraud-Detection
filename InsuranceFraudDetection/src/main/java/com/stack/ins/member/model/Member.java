@@ -2,7 +2,6 @@ package com.stack.ins.member.model;
 
 public class Member {
 	
-	
     private String userid;
     private String name;
     private String password;

@@ -12,7 +12,7 @@
 	<!-- jdbc.properties-> database 기반 플랫폼 및 아이디와 비번 -->
 	<context:property-placeholder location="classpath:database/jdbc.properties"/>
 	
-	<!-- dataSource bean 만들기  -->
+	<!-- dataSource 빈 만들기  -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="${jdbc.driverClassName}"/>
 		<property name="url" value="${jdbc.url}"/>
@@ -22,10 +22,10 @@
 	
 	<!-- JdbcTemplate 빈 만들기 -->
 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-		<property name="dataSource" ref="dataSource"></property>
+		<property name="dataSource" ref="dataSource"/>
 	</bean>
 	
-	<!-- mybatis session빈 만들기 -->
+	<!-- mybatis session 빈 만들기 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
 		<property name="mapperLocations" value="classpath:com/stack/ins/**/*.xml"/>

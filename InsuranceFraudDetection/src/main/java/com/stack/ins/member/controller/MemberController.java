@@ -28,26 +28,28 @@ public class MemberController {
 	@PostMapping(value="/member/login")
 	public String login(String userid, String password, HttpSession session, Model model) {
 		Member member = memberService.selectMember(userid);
-		// 아이디가 db에 있을 경우
 		if(member != null) {
 			String dbPassword = member.getPassword();
-			// 패트워드가 없을 떄
+			// 아이디가 없음
 			if(dbPassword == null) {
 				model.addAttribute("message", "존재하지 않는 아이디 입니다.");
 			}else {
-				// 패스워드가 있을 떄 
+				// 아이디 있음 
 				if(dbPassword.equals(password)) {
-					//썌션에  회원 정보를 넣어 준다. 
+					// 비밀번호 일치
+					// 세션에  회원 정보를 넣어 준다. 
 					session.setAttribute("userid", userid);
 					session.setAttribute("name", member.getName());
 					session.setAttribute("email",member.getEmail());
 					model.addAttribute("message", "로그인 성공");
 					return "home";
 				}else {
-					//불일치
-					model.addAttribute("mesaage", "비밀번호가 다릅니다.");
+					//비밀번호 불일치
+					model.addAttribute("message", "비밀번호가 다릅니다.");
 				}
 			}
+		}else {
+			model.addAttribute("message", "USER_NOT_FOUND");
 		}
 		session.invalidate();
 		return "home";
@@ -55,16 +57,14 @@ public class MemberController {
 // 회원 가입 폼으로 가기 
 	@GetMapping(value="/member/sign")
 	public String singupForm() {
-		
 		return "member/signup_form";
 	}
 //  회원 가입 하기 	
-	@PostMapping(value="/member/sgin")
+	@PostMapping(value="/member/sign")
 	public String memberInsert(Member member, Model model, HttpSession session) {
 		memberService.insertMember(member);
 		session.invalidate();
 		return "home";
-		
 	}
 
 //  로그아웃 하기 ( 만들고 좀 더 생각해보기 - > 로그인한 페이지로 리다이랙트 하는건 어떨까????)
@@ -76,7 +76,7 @@ public class MemberController {
 	
 //  아이디 수정하기 폼으로 가기
 	@GetMapping(value="/member/update")
-	public String updateMember( HttpSession session, Model model) {
+	public String updateMember(HttpSession session, Model model) {
 		String userid = (String)session.getAttribute("userid");
 		if(userid != null && !userid.equals("")) {
 			Member member = memberService.selectMember(userid);
@@ -86,16 +86,15 @@ public class MemberController {
 		}else {
 			model.addAttribute("message", "로그인을 하세요");
 			return "member/login_form";
-		}
-		
+		}	
 	}
+	
 //  아이디 수정하기
 	@PostMapping(value="/member/update")
 	public String updateMember(Member member, HttpSession session, Model model) {
-		
 		try {
 			memberService.updateMember(member);
-			model.addAttribute("Member", member);
+			model.addAttribute("member", member);
 			model.addAttribute("message", "회원가입 성공!");
 			return "member/login_form";
 		} catch (Exception e) {

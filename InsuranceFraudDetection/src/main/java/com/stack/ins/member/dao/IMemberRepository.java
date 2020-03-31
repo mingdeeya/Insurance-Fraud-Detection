@@ -21,6 +21,4 @@ public interface IMemberRepository {
 	void deleteMember(Member member);
 //  비밀번호 가져오기 
 	String getPassword(String userid);
-	
-	
 }
