@@ -39,13 +39,18 @@ h1, h2, h3, h4, h5, h6, .font-primary {
     margin-top:-0.5em;
     margin-left:-50%;
 }
+ut;
+    transition: all 0.5s ease-in-out;
+    text-decoration: none;
+}
+
 
 /*--------------------------------------------------------------
 # Back to top button
 --------------------------------------------------------------*/
 .back-to-top {
   position: fixed;
-  display: none; 
+  display: none;
   width: 40px;
   height: 40px;
   border-radius: 3px;
@@ -113,7 +118,7 @@ h1, h2, h3, h4, h5, h6, .font-primary {
   max-height: 40px;
 }
 
-#main {
+ {
   margin-top: 80px;
 }
 

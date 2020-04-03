@@ -23,8 +23,10 @@
 	<link href="<c:url value='/assets/vendor/boxicons/css/boxicons.min.css'/>" rel="stylesheet">
 	<link href="<c:url value='/assets/vendor/venobox/venobox.css'/>" rel="stylesheet">
 	<link href="<c:url value='/assets/vendor/owl.carousel/assets/owl.carousel.min.css'/>" rel="stylesheet">
-	<link href="<c:url value='/assets/vendor/aos/aos.css'/>" rel="stylesheet">	
-	
+	<link href="<c:url value='/assets/vendor/aos/aos.css'/>" rel="stylesheet">
+
+
+	<link href='https://fonts.googleapis.com/css?family=Work+Sans:400,100,700,300|Nothing+You+Could+Do' rel='stylesheet' type='text/css'>
 	
 	<!-- Template Main CSS File -->
 	
