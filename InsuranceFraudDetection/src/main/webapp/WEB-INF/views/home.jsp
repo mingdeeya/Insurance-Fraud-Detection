@@ -15,7 +15,7 @@
       <!-- Slide 1 -->
       <div class="carousel-item active">
         <div class="carousel-container">
-          <h2 class="animated fadeInDown">한글이 꺠진따 <span>Moderna</span></h2>
+          <h2 class="animated fadeInDown">보험사기 <span>Moderna</span></h2>
           <p class="animated fadeInUp">Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel. Minus et tempore modi architecto.</p>
           <a href="" class="btn-get-started animated fadeInUp">Read More</a>
         </div>

@@ -16,7 +16,7 @@
         <div class="d-flex justify-content-between align-items-center">
           <h2>QnA</h2>
           <ol>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="./">Home</a></li>
             <li>QnA</li>
           </ol>
         </div>
@@ -27,78 +27,76 @@
     <!-- ======= About Section ======= -->
     
     <section class="team" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
-  	<div class="boardContainer">
-	    <div class="pg-opt">
-	        <div class="row">
-	            <div class="col-md-6 pc">
-	                <h2><fmt:message key="CONTENT"/></h2>
-	            </div>
-	            <div class="col-md-6">
-	                <ol class="breadcrumb">
-	                    <li><fmt:message key="BOARD"/></li>
-	                    <li class="active"><fmt:message key="CONTENT"/></li>
-	                </ol>
-	            </div>
-	        </div>
+	<div class="container">
+		<div class="pg-opt">
+		    <div class="row">
+		        <div class="col-md-6 pc">
+		            <h2><fmt:message key="BOARD_LIST"/> 
+		            <c:if test="${empty name}">
+		            <small style="color:red;"><fmt:message key="LOGIN"/></small>
+		            </c:if>
+		            </h2>
+		        </div>
+		        <div class="col-md-6">
+		            <ol class="breadcrumb">
+		                <li><fmt:message key="BOARD"/></li>
+		                <li class="active"><fmt:message key="BOARD_LIST"/></li>
+		            </ol>
+		        </div>
+		    </div>
 	    </div>
+		${message}
 		<div class="content">
+			<form action="<c:url value='/board/search'/>" method="get">
+				<div class="pull-right" style="margin-bottom: 5px;">
+				<div class="col-xs-9">
+			        <input type="text" name="keyword" class="form-control">
+			    </div>
+			        <input type="submit" class="btn btn-warning" value="<fmt:message key="SEARCH"/>">
+				</div>
+			</form>
+		    <table class="table table-hover table-bordered">
+			<thead>
+			<tr>
+				<!-- td class="pc"><fmt:message key="NO"/></td-->
+				<td><fmt:message key="BOARD_ID"/></td>
+				<td class="pc"><fmt:message key="WRITER"/></td>
+				<td><fmt:message key="SUBJECT"/></td>
+				<td class="pc"><fmt:message key="WRITE_DATE"/></td>
+				<td class="pc"><fmt:message key="READ_COUNT"/></td>
+				<!--td class="pc"><fmt:message key="FILE"/></td-->
+			</tr>
+			</thead>
+			<c:set var="seq" value="${(page-1)*10}" scope="page" />
+			<c:forEach var="board" items="${boardList}">
+			<tr>
+				<c:set var="seq" value="${seq + 1}" scope="page"/>
+				<!-- td class="pc">${seq}</td-->
+				<td>${board.boardId}<!-- (${board.categoryId})--></td>
+				<td class="pc">${board.writer}</td>
+				<td>
+				<jk:reply replynum="${board.replyNumber}" replystep="${board.replyStep}"/>
+				<a href='<c:url value="/board/${board.boardId}"/>'>${board.title}</a>
+				</td>
+				<td class="pc"><fmt:formatDate value="${board.writeDate}" pattern="YYYY-MM-dd"/></td>
+				<td class="pc">${board.readCount}</td>
+				<!-- td class="pc"><span class="glyphicon glyphicon-file"></span-->
+			</tr>
+			</c:forEach>
+			</table>
 	
-		<table class="table table-bordered">
-		<tr class="pc">
-			<td colspan=2 align="right">
-			<a href='<c:url value="/board/cat/${categoryId}"/>'><button type="button" class="btn btn-info"><fmt:message key="BOARD_LIST"/></button></a>
-			<a href='<c:url value="/board/write/${categoryId}"/>'><button type="button" class="btn btn-info"><fmt:message key="WRITE_NEW_ARTICLE"/></button></a>
-			<a href='<c:url value="/board/reply/${board.boardId}"/>'><button type="button" class="btn btn-info"><fmt:message key="REPLY"/></button></a>
-			<a href='<c:url value="/board/update/${board.boardId}"/>'><button type="button" class="btn btn-info"><fmt:message key="UPDATE"/></button></a>
-			<a href='<c:url value="/board/delete/${board.boardId}"/>'><button type="button" class="btn btn-info"><fmt:message key="DELETE"/></button></a>
-			</td>
-		</tr>
-		<tr>
-			<td width="20%"><fmt:message key="BOARD_ID"/></td>
-			<td>${board.boardId}</td>
-		</tr>
-		<tr>
-			<td width="20%"><fmt:message key="WRITER"/></td>
-			<td>${board.writer}</td>
-		</tr>
-		<tr>
-			<td width="20%"><fmt:message key="WRITE_DATE"/></td>
-			<td><fmt:formatDate value="${board.writeDate}" pattern="YYYY-MM-dd HH:mm:ss"/></td>
-		</tr>
-		<tr>
-			<td><fmt:message key="SUBJECT"/> </td>
-			<td>${board.title}</td>
-		</tr>
-		<tr>
-			<td><fmt:message key="CONTENT"/></td>
-			<td class="board_content">${board.content}</td>
-		</tr>
-		<c:if test="${!empty board.fileName}">
-		<tr>
-			<td><fmt:message key="FILE"/></td>
-			<td>
-			<%--c:if test="${!empty sessionScope.userid}"--%>
-			<c:set var="len" value="${fn:length(board.fileName)}"/>
-			<c:set var="filetype" value="${fn:toUpperCase(fn:substring(board.fileName, len-4, len))}"/>
-			<c:if test="${(filetype eq '.JPG') or (filetype eq 'JPEG') or (filetype eq '.PNG') or (filetype eq '.GIF')}"><img src='<c:url value="/file/${board.fileId}"/>' class="img-thumbnail"><br></c:if>
-			<%--/c:if--%>
-			<a href='<c:url value="/file/${board.fileId}"/>'>${board.fileName} (<fmt:formatNumber>${board.fileSize}</fmt:formatNumber>byte)</a>
-			</td>
-		</tr>
-		</c:if>
-		<tr>
-			<td colspan=2 align="right">
-			<a href='<c:url value="/board/cat/${categoryId}"/>'><button type="button" class="btn btn-info"><fmt:message key="BOARD_LIST"/></button></a>
-			<a href='<c:url value="/board/write/${categoryId}"/>'><button type="button" class="btn btn-info"><fmt:message key="WRITE_NEW_ARTICLE"/></button></a>
-			<a href='<c:url value="/board/reply/${board.boardId}"/>'><button type="button" class="btn btn-info"><fmt:message key="REPLY"/></button></a>
-			<a href='<c:url value="/board/update/${board.boardId}"/>'><button type="button" class="btn btn-info"><fmt:message key="UPDATE"/></button></a>
-			<a href='<c:url value="/board/delete/${board.boardId}"/>'><button type="button" class="btn btn-info"><fmt:message key="DELETE"/></button></a>
-			</td>
-		</tr>
-		</table>
-	</div>
-	
-	</div>  
+			<table class="table">
+			<tr>
+				<td align="left">
+					<jk:paging categoryId="${categoryId}" totalPageCount="${totalPageCount}" nowPage="${page}"/>
+				</td>
+				<td align="right">
+					<a href='<c:url value="/board/write/${categoryId}"/>'><button type="button" class="btn btn-info"><fmt:message key="WRITE_NEW_ARTICLE"/></button></a>
+				</td>
+			</tr>
+			</table>
+		</div>
+	</div> 
   
     </section><!-- End About Section -->
 

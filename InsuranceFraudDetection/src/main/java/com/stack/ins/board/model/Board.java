@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class Board {
 	private int boardId;
 	private int categoryId;
+	private int userId;
 	private String writer;
 	private String email;
 	private String password;
@@ -38,6 +39,12 @@ public class Board {
 	}
 	public void setCategoryId(int categoryId) {
 		this.categoryId = categoryId;
+	}
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 	public String getWriter() {
 		return writer;
@@ -111,7 +118,6 @@ public class Board {
 	public void setPage(int page) {
 		this.page = page;
 	}
-	
 	public BoardCategory getCategory() {
 		return category;
 	}
@@ -124,7 +130,6 @@ public class Board {
 	public void setFile(MultipartFile file) {
 		this.file = file;
 	}
-
 	public int getFileId() {
 		return fileId;
 	}
@@ -152,11 +157,11 @@ public class Board {
 	
 	@Override
 	public String toString() {
-		return "Board [boardId=" + boardId + ", categoryId=" + categoryId + ", writer=" + writer + ", email=" + email
-				+ ", password=" + password + ", title=" + title + ", writeDate=" + writeDate
-				+ ", masterId=" + masterId + ", readCount=" + readCount + ", replyNumber=" + replyNumber
-				+ ", replyStep=" + replyStep + ", seq=" + seq + ", category=" + category + ", fileId=" + fileId
-				+ ", fileName=" + fileName + ", fileSize=" + fileSize + ", fileContentType=" + fileContentType + "]";
+		return "Board [boardId=" + boardId + ", categoryId=" + categoryId + ", userId=" + userId + ", writer=" + writer
+				+ ", email=" + email + ", password=" + password + ", title=" + title + ", content=" + content
+				+ ", writeDate=" + writeDate + ", masterId=" + masterId + ", readCount=" + readCount + ", replyNumber="
+				+ replyNumber + ", replyStep=" + replyStep + ", seq=" + seq + ", page=" + page + ", category="
+				+ category + ", file=" + file + ", fileId=" + fileId + ", fileName=" + fileName + ", fileSize="
+				+ fileSize + ", fileContentType=" + fileContentType + "]";
 	}
-
 }
