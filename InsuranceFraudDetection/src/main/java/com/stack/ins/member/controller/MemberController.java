@@ -1,106 +1,214 @@
 package com.stack.ins.member.controller;
 
+
+import java.util.Date;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.stack.ins.member.model.Member;
 import com.stack.ins.member.service.IMemberService;
+
+import aj.org.objectweb.asm.Type;
+
 @Controller
 public class MemberController {
-		
+
 	@Autowired
 	IMemberService memberService;
-
-//	로그인 폼으로 가기 
-/* @RequestMapping(value="/member/login", method=RequestMethod.GET) */
-	@GetMapping(value="/member/login")
-	public String loginForm() {
-		return "member/login_form";
+	
+	@GetMapping(value="/member/admin")
+	public String showMemberList(Model model) {
+		List<Member> memberList = memberService.selectAllMembers();
+		model.addAttribute("memberList", memberList);
+		return "member/admin";
 	}
-//  로그인 하기
+	
+	
+	// 회원 가입 폼으로 가기
+	@GetMapping(value="/member/insert")
+	public String insertFrom() {
+		return "member/insert";
+	}
+	
+	@PostMapping(value="/member/insert")
+	public String insertMember(String userId, String name, String password, String email, String phone, @RequestParam("birth") @DateTimeFormat(pattern="yyyy-MM-dd") Date birth, Model model) {
+		Member member = new Member();
+		member.setUserId(userId);
+		member.setName(name);
+		member.setPassword(password);
+		member.setEmail(email);
+		member.setPhone(phone);
+		member.setBirth(birth);
+		System.out.println(member);
+		memberService.insertMember(member);
+		
+		model.addAttribute("message", "회원가입 완료!");
+		System.out.println("회원가입된 호원 정보  =" + member);
+
+		return "member/login";
+	}
+//   how to post in date
+//	@PostMapping(value="/member/insert")
+//	public String insertMember(Member member, Model model) {
+////		Member member = new Member();
+////		member.setUserId(userId);
+////		member.setName(name);
+////		member.setPassword(password);
+////		member.setEmail(email);
+////		member.setPhone(phone);
+////		member.setBirth(birth);
+//		System.out.println(member);
+//		memberService.insertMember(member);
+//
+//		model.addAttribute("message", "회원가입 완료!");
+//		System.out.println("회원가입된 호원 정보  =" + member);
+//
+//		return "member/login";
+//	}
+
+
+	// 로그인 폼으로 가기 
+	@GetMapping(value="/member/login")
+	public String loginFrom() {
+		return "member/login";
+	}
+	// 로그인 하기 
 	@PostMapping(value="/member/login")
-	public String login(String userid, String password, HttpSession session, Model model) {
-		Member member = memberService.selectMember(userid);
-		if(member != null) {
+	public String login(String userId, HttpSession session, String password, Model model) {
+		Member member = memberService.selectMember(userId);
+		
+		if(member != null  && member.getDelCount() == 0) {
+			System.out.println(member.toString());
 			String dbPassword = member.getPassword();
-			// 아이디가 없음
-			if(dbPassword == null) {
-				model.addAttribute("message", "존재하지 않는 아이디 입니다.");
+				if(dbPassword == null) {
+				//아이디가 없음
+					model.addAttribute("message", "아이디가 없습니다.");
 			}else {
-				// 아이디 있음 
+				//아이디 있음
+		
 				if(dbPassword.equals(password)) {
-					// 비밀번호 일치
-					// 세션에  회원 정보를 넣어 준다. 
-					session.setAttribute("userid", userid);
+					//비밀번호 일치
+					session.setAttribute("userId", userId);
 					session.setAttribute("name", member.getName());
-					session.setAttribute("email",member.getEmail());
-					model.addAttribute("message", "로그인 성공");
-					return "home";
+					session.setAttribute("email", member.getEmail());
+					session.setAttribute("birth", member.getBirth());
+					model.addAttribute("message", "환영 합니다!");
+						return "member/login";
 				}else {
 					//비밀번호 불일치
-					model.addAttribute("message", "비밀번호가 다릅니다.");
+					model.addAttribute("message", "비밀 번호가 일치하지 않습니다!");
 				}
 			}
 		}else {
-			model.addAttribute("message", "USER_NOT_FOUND");
+			model.addAttribute("message", "아이디가 존재하지 않습니.");
 		}
-		session.invalidate();
-		return "home";
+		session.invalidate();	
+		return "member/login";
 	}
-// 회원 가입 폼으로 가기 
-	@GetMapping(value="/member/sign")
-	public String singupForm() {
-		return "member/signup_form";
-	}
-//  회원 가입 하기 	
-	@PostMapping(value="/member/sign")
-	public String memberInsert(Member member, Model model, HttpSession session) {
-		memberService.insertMember(member);
-		session.invalidate();
-		return "home";
-	}
-
-//  로그아웃 하기 ( 만들고 좀 더 생각해보기 - > 로그인한 페이지로 리다이랙트 하는건 어떨까????)
 	@GetMapping(value="/member/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return "home";
+		return "member/login";
 	}
-	
-//  아이디 수정하기 폼으로 가기
-	@GetMapping(value="/member/update")
-	public String updateMember(HttpSession session, Model model) {
-		String userid = (String)session.getAttribute("userid");
-		if(userid != null && !userid.equals("")) {
-			Member member = memberService.selectMember(userid);
+	@RequestMapping(value="/member/delete", method=RequestMethod.GET)
+	public String deleteMember(HttpSession session, Model model) {
+		String userId = (String)session.getAttribute("userId");
+		if(userId != null && !userId.equals("")) {
+			Member member = memberService.selectMember(userId);
 			model.addAttribute("member", member);
-			model.addAttribute("message", "업데이트");
-			return "member/user_update_form";
+			model.addAttribute("message", "아이디 삭제");
+			return "member/delete";
 		}else {
-			model.addAttribute("message", "로그인을 하세요");
-			return "member/login_form";
-		}	
-	}
-	
-//  아이디 수정하기
-	@PostMapping(value="/member/update")
-	public String updateMember(Member member, HttpSession session, Model model) {
-		try {
-			memberService.updateMember(member);
-			model.addAttribute("member", member);
-			model.addAttribute("message", "회원가입 성공!");
-			return "member/login_form";
-		} catch (Exception e) {
-			model.addAttribute("message", e.getMessage());
-			e.printStackTrace();
-//			에러 페이지로 보내기
-			return "error/page";
+			//userid가 세션에 없을 경우 (로그인 하지 않았을 경우)
+			model.addAttribute("message", "NOT_LOGIN_USER");
+			return "member/login";
 		}
 	}
+	@PostMapping(value="/member/delete")
+	public String deleteMember(String password, String userId, HttpSession session, Model model) {
 	
+
+//		System.out.println(member.toString());
+			Member member = memberService.selectMember(userId);
+			if(password != null && password.equals(member.getPassword())) {
+				
+				memberService.saveDeleteMember(userId);
+				model.addAttribute("message", "회원 탈퇴 성공!");
+				session.invalidate();
+				return "redirect:/";
+			}else {
+				model.addAttribute("message", "비밀번호가 틀립니다.");
+				model.addAttribute("member", member);
+				return "member/delete";
+			}
+
+		
+	}
+	
+	
+//	@RequestMapping(value="/member/delete", method=RequestMethod.POST)
+//	public String deleteMember(String password, HttpSession session, Model model) {
+//		try {
+//			Member member = new Member();
+//			member.setUserId((String)session.getAttribute("userId"));
+//			String dbpw = memberService.getPassword(member.getUserId());
+//			System.out.println(dbpw);
+//			if(password != null && password.equals(dbpw)) {
+//				member.setPassword(password);
+//				memberService.saveDeleteMember(member);
+//				session.invalidate();//삭제되었으면 로그아웃 처리
+//				return "member/login";
+//			}else {
+//				model.addAttribute("message", "WRONG_PASSWORD");
+//				return "member/delete";
+//			}
+//		}catch(Exception e){
+//			model.addAttribute("message", "DELETE_FAIL");
+//			e.printStackTrace();
+//			return "member/delete";
+//		}
+//	}
+
+	// 업데이트 페이지로 가기 
+	@GetMapping(value="/member/update")
+	public String updateMember(HttpSession session, Model model) {
+		String userId = (String)session.getAttribute("userId");
+		if(userId != null && !userId.equals("")) {
+			Member member = memberService.selectMember(userId);
+			model.addAttribute("member", member);
+			model.addAttribute("message", "회원 정보 수정");
+			return "member/update";
+		}else {
+			model.addAttribute("message", "로그인 하지 않았습니다.");
+		}
+		return "member/login";
+	}
+	
+	@PostMapping(value="/member/update")
+	public String updateMember(Member member , HttpSession session, Model model) {
+		try {
+			memberService.updateMember(member);
+			model.addAttribute("message", "회원 정보");
+			model.addAttribute("member", member);
+			session.setAttribute("email", member.getEmail());
+			return "member/login";
+		}catch (Exception e) {
+			model.addAttribute("message", e.getMessage());
+			e.printStackTrace();
+			return "member/error";
+		}
+		
+	}
+
 }

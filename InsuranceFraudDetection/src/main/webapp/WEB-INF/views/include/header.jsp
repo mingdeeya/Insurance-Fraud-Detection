@@ -38,8 +38,15 @@
               <li><a href="<c:url value='/'/>">Drop Down 4</a></li>
               <li><a href="<c:url value='/'/>">Drop Down 5</a></li>
             </ul>
+          
           </li>
+          
+          <c:if test="${empty sessionScope.userId}">
           <li><a href="<c:url value='/member/login'/>">로그인</a></li>
+          </c:if>>
+          <c:if test="${not empty sessionScope.userId}">
+          <li><a href="<c:url value='/member/login'/>">My Page</a></li>
+          </c:if>
         </ul>
       </nav><!-- .nav-menu -->
 

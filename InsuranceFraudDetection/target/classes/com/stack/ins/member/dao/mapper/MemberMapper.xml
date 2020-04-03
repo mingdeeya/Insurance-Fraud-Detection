@@ -10,8 +10,8 @@
  	<insert id="insertMember" parameterType="com.stack.ins.member.model.Member">
  		<![CDATA[
 			INSERT INTO MEMBER
-			(USERID, NAME, PASSWORD, EMAIL, PHONE, DELETECOUNT)
-			VALUES(#{userid}, #{name}, #{password}, #{email}, #{phone}, 0)	
+			    (USERID, NAME, PASSWORD, EMAIL, PHONE, DELETECOUNT, BIRTH)
+			VALUES(#{userId}, #{name}, #{password}, #{email}, #{phone}, 0, #{birth})    
  		]]>
  	</insert>
  	
@@ -21,14 +21,15 @@
  	<select id="selectMember" parameterType="string" resultType="com.stack.ins.member.model.Member">
  		<![CDATA[
 			SELECT 
-			    USERID,
-			    NAME,
-			    PASSWORD,
-			    EMAIL,
-			    PHONE,
-			    DELETECOUNT
+			    USERID              AS "userId",
+			    NAME                AS "name",
+			    PASSWORD            AS "password",
+			    EMAIL               AS "email",
+			    PHONE               AS "phone",
+			    DELETECOUNT         AS "delCount",
+			    BIRTH               AS "birth"
 			FROM MEMBER
-			WHERE USERID = #{userid}
+			WHERE USERID = #{userId}
  		
  		]]>
  	</select>
@@ -36,36 +37,38 @@
  	<select id="selectAllMembers" resultType="com.stack.ins.member.model.Member">
  		<![CDATA[ 
 			SELECT 
-			    USERID,
-			    NAME,
-			    PASSWORD,
-			    EMAIL,
-			    PHONE,
-			    DELETECOUNT
-			FROM MEMBER 	
+			    USERID              AS "userId",
+			    NAME                AS "name",
+			    PASSWORD            AS "password",
+			    EMAIL               AS "email",
+			    PHONE               AS "phone",
+			    DELETECOUNT         AS "delCount",
+			    BIRTH               AS "birth"
+			FROM MEMBER
  		]]>
  	</select>	
  	<!-- 패스워드 찾기 -->
  	<select id="getPassword" parameterType="string" resultType="int">
  		<![CDATA[ 
-			SELECT
-			    PASSWORD
+			SELECT 
+			    PASSWORD            AS "password"
 			FROM MEMBER
-			WHERE USERID=#{userid} 		
+			WHERE USERID = #{userId}
  		]]> 	
  	</select>
- 	<!-- DB에서 삭제되지 않은 회원 정보 가져오기  -->
+ 	<!-- DB에서 삭제된  회원 정보 가져오기  -->
  	<select id="getDeleteMember" resultType="com.stack.ins.member.model.Member">
  		<![CDATA[
-			SELECT
-			    USERID,
-			    NAME,
-			    PASSWORD,
-			    EMAIL,
-			    PHONE,
-			    DELETECOUNT
+			SELECT 
+			    USERID              AS "userId",
+			    NAME                AS "name",
+			    PASSWORD            AS "password",
+			    EMAIL               AS "email",
+			    PHONE               AS "phone",
+			    DELETECOUNT         AS "delCount",
+			    BIRTH               AS "birth"
 			FROM MEMBER
-			WHERE DELETECOUNT =1 			
+			WHERE DELETECOUNT = 1
  		]]>
  	</select>
  	
@@ -74,24 +77,22 @@
  	<!--                           UPDATE                      -->
  	<!-- 회원 정보 수정하기  -->
  	<update id="updateMember" parameterType="com.stack.ins.member.model.Member">
- 		<![CDATA[ 
+ 		<![CDATA[
+			UPDATE MEMBER
 			SET
-			    NAME =#{name},
-			    PASSWORD =#{password},
-			    PHONE =#{phone},
-			    EMAIL =#{email}
-			WHERE
-			    USERID =#{userid}	
+			    NAME = #{name}, PASSWORD = #{password},PHONE= #{phone}, EMAIL= #{email}
+			WHERE 
+			    USERID = #{userId}
  		]]> 	
  	</update>
  	<!--             회원 삭제하기 (DB 에서는 삭제 하지 않음) for 복구를 위함 -->
-	<update id="saveDeleteMember" parameterType="com.stack.ins.member.model.Member">
+	<update id="saveDeleteMember" parameterType="string">
  		<![CDATA[ 
 			UPDATE MEMBER 
 			SET
-			  DELETECOUNT =1
+			  DELETECOUNT = 1
 			WHERE 
-			  USERID = #{userid} 			
+			  USERID = #{userId}
  		]]>	
 	</update>
  	 
@@ -99,7 +100,7 @@
 	<delete id="deleteMember" parameterType="com.stack.ins.member.model.Member">
  		<![CDATA[ 
 			DELETE FROM MEMBER
-			WHERE USERID = #{userid} 		
+			WHERE USERID = #{userId} 		
  		]]>	
 	</delete>
 	

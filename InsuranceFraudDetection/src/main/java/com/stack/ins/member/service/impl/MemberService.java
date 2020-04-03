@@ -21,9 +21,10 @@ public class MemberService implements IMemberService {
 	}
 
 	@Override
-	public Member selectMember(String userid) {
-		return memberDao.selectMember(userid);
-
+	public Member selectMember(String userId) {
+//		System.out.println("test 성공");
+		return memberDao.selectMember(userId);
+		
 	}
 
 	@Override
@@ -39,15 +40,15 @@ public class MemberService implements IMemberService {
 	}
 
 	@Override
-	public void saveDeleteMember(Member member) {
+	public void saveDeleteMember(String userId) {
 		// TODO Auto-generated method stub
-		memberDao.saveDeleteMember(member);
+		memberDao.saveDeleteMember(userId);
 
 	}
 
 	@Override
-	public Member getDeleteMember(int deleteCount) {
-		return memberDao.getDeleteMember(deleteCount);
+	public Member getDeleteMember(int delCount) {
+		return memberDao.getDeleteMember(delCount);
 		
 
 	}
@@ -59,8 +60,8 @@ public class MemberService implements IMemberService {
 	}
 
 	@Override
-	public String getPassword(String userid) {
-		return memberDao.getPassword(userid);
+	public String getPassword(String userId) {
+		return memberDao.getPassword(userId);
 	}
 
 }
