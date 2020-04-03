@@ -22,6 +22,11 @@ public class BoardCategoryService implements IBoardCategoryService{
 	}
 
 	@Override
+	public List<BoardCategory> selectAllCategoryByClass1(int class1) {
+		return boardCategoryRepository.selectAllCategoryByClass1(class1);
+	}
+
+	@Override
 	public void insertNewCategory(BoardCategory boardCategory) {
 		boardCategoryRepository.insertNewCategory(boardCategory);
 	}

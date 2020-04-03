@@ -5,7 +5,6 @@ import java.util.List;
 import com.stack.ins.board.model.Board;
 import com.stack.ins.board.model.BoardFile;
 
-
 public interface IBoardService {
 	void insertArticle(Board boardId);
 	void insertArticle(Board boardId, BoardFile file);

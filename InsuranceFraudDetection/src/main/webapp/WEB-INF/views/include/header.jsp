@@ -18,7 +18,7 @@
           <li class="active"><a href="<c:url value='/'/>">홈으로 가기</a></li>
           <li><a href="<c:url value='/about'/>">about</a></li>
           <li><a href="<c:url value='/blog'/>">blog</a></li>
-          <li><a href="<c:url value='/board'/>">board</a></li>
+          <li><a href="<c:url value='/board/cat/1'/>">board</a></li>
           <li><a href="<c:url value='/portfolio'/>">Portfolio</a></li>
           <li><a href="<c:url value='/team'/>">team</a></li>
           <li><a href="<c:url value='/services'/>">services</a></li>
