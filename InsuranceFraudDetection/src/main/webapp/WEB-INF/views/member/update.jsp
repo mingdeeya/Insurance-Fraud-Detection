@@ -70,20 +70,20 @@
     </div>
 	<div class="form-group">
       <label class="control-label col-sm-2" for="phone">전화번호</label>
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <input type="text" name="phone" id="phone" value="${member.phone}" class="form-control" required>
       </div>
     </div>
 	<div class="form-group">
       <label class="control-label col-sm-2" for="email">이메일</label>
-      <div class="col-sm-8">
+      <div class="col-sm-4">
         <input type="text" name="email" id="email" value="${member.email}" class="form-control" required>
       </div>
     </div>
     <div class="form-group">
     	<div class="col-sm-offset-2 col-sm-8">
 		<input type="submit" class="btn btn-info" value="저장">
-		<input type="reset" class="btn btn-info" value="취소">
+		<input type="reset" class="btn btn-info" value="취소" id="cencle">
 		</div>
 	</div>
 	</form>

@@ -10,8 +10,8 @@
  	<insert id="insertMember" parameterType="com.stack.ins.member.model.Member">
  		<![CDATA[
 			INSERT INTO MEMBER
-			    (USERID, NAME, PASSWORD, EMAIL, PHONE, DELETECOUNT, BIRTH)
-			VALUES(#{userId}, #{name}, #{password}, #{email}, #{phone}, 0, #{birth})    
+			     (USERNUM ,USERID, NAME, PASSWORD, EMAIL, PHONE, DELETECOUNT, BIRTH)
+			VALUES(SEQ_MEMBER.NEXTVAL, #{userId}, #{name}, #{password}, #{email}, #{phone}, 0, #{birth})    
  		]]>
  	</insert>
  	
@@ -20,14 +20,17 @@
  	<!-- 특정 회원 조회하기 -->
  	<select id="selectMember" parameterType="string" resultType="com.stack.ins.member.model.Member">
  		<![CDATA[
-			SELECT 
+			SELECT
+				USERNUM             AS "userNum", 
 			    USERID              AS "userId",
 			    NAME                AS "name",
 			    PASSWORD            AS "password",
 			    EMAIL               AS "email",
 			    PHONE               AS "phone",
 			    DELETECOUNT         AS "delCount",
-			    BIRTH               AS "birth"
+			    BIRTH               AS "birth",
+                INSERTDAY           AS "insertDay",
+                DELETEDAY           AS "delDay"
 			FROM MEMBER
 			WHERE USERID = #{userId}
  		
@@ -36,14 +39,17 @@
  	<!-- 모든 회원 조회하기  -->
  	<select id="selectAllMembers" resultType="com.stack.ins.member.model.Member">
  		<![CDATA[ 
-			SELECT 
+			SELECT
+				USERNUM             AS "userNum", 
 			    USERID              AS "userId",
 			    NAME                AS "name",
 			    PASSWORD            AS "password",
 			    EMAIL               AS "email",
 			    PHONE               AS "phone",
 			    DELETECOUNT         AS "delCount",
-			    BIRTH               AS "birth"
+			    BIRTH               AS "birth",
+                INSERTDAY           AS "insertDay",
+                DELETEDAY           AS "delDay"
 			FROM MEMBER
  		]]>
  	</select>	
@@ -60,13 +66,16 @@
  	<select id="getDeleteMember" resultType="com.stack.ins.member.model.Member">
  		<![CDATA[
 			SELECT 
+				USERNUM             AS "userNum", 
 			    USERID              AS "userId",
 			    NAME                AS "name",
 			    PASSWORD            AS "password",
 			    EMAIL               AS "email",
 			    PHONE               AS "phone",
 			    DELETECOUNT         AS "delCount",
-			    BIRTH               AS "birth"
+			    BIRTH               AS "birth",
+                INSERTDAY           AS "insertDay",
+                DELETEDAY           AS "delDay"
 			FROM MEMBER
 			WHERE DELETECOUNT = 1
  		]]>
@@ -90,7 +99,8 @@
  		<![CDATA[ 
 			UPDATE MEMBER 
 			SET
-			  DELETECOUNT = 1
+			  DELETECOUNT = 1,
+              DELETEDAY= SYSDATE
 			WHERE 
 			  USERID = #{userId}
  		]]>	

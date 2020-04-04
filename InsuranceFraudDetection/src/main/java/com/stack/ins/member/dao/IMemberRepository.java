@@ -14,7 +14,7 @@ public interface IMemberRepository {
 //  회원 정보 수정하기
  	void updateMember(Member member);
 // 	회원 삭제 (db 에는 삭제하지 않음) 기본 0  삭제시 1 -> 북구도 가능 함 
-	Member saveDeleteMember(String userId);
+	void saveDeleteMember(String userId);
 //  삭제된 아이디 가져오기(db에서 삭제 되지 않음)
 	Member getDeleteMember(int delCount);
 //  회원 삭제 (db 에서 완전히 삭제)

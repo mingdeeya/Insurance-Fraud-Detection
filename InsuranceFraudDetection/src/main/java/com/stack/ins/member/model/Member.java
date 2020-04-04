@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Member {
 	
+	private int userNum;
 	private String userId;
 	private String name;
 	private String password;
@@ -11,6 +12,28 @@ public class Member {
 	private String phone;
 	private int delCount;
 	private Date birth;
+	private Date insertDay;
+	private Date delDay;
+	
+	
+	public int getUserNum() {
+		return userNum;
+	}
+	public void setUserNum(int userNum) {
+		this.userNum = userNum;
+	}
+	public Date getInsertDay() {
+		return insertDay;
+	}
+	public void setInsertDay(Date insertDay) {
+		this.insertDay = insertDay;
+	}
+	public Date getDelDay() {
+		return delDay;
+	}
+	public void setDelDay(Date delDay) {
+		this.delDay = delDay;
+	}
 	public String getUserId() {
 		return userId;
 	}
@@ -53,11 +76,14 @@ public class Member {
 	public void setBirth(Date birth) {
 		this.birth = birth;
 	}
+	
 	@Override
 	public String toString() {
-		return "Member [userId=" + userId + ", name=" + name + ", password=" + password + ", email=" + email
-				+ ", phone=" + phone + ", delCount=" + delCount + ", birth=" + birth + "]";
+		return "Member [userNum=" + userNum + ", userId=" + userId + ", name=" + name + ", password=" + password
+				+ ", email=" + email + ", phone=" + phone + ", delCount=" + delCount + ", birth=" + birth
+				+ ", insertDay=" + insertDay + ", delDay=" + delDay + "]";
 	}
+
 	
 	
 	
