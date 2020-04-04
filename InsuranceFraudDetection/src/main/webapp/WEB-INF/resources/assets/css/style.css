@@ -1551,7 +1551,7 @@ section {
 
 .blog .entry .entry-meta {
   margin-bottom: 15px;
-  color: #dddddd;
+  color: #000000;
 }
 
 .blog .entry .entry-meta ul {
@@ -1572,7 +1572,7 @@ section {
 }
 
 .blog .entry .entry-meta a {
-  color: #aaaaaa;
+  color: #000000;
   font-size: 14px;
   display: inline-block;
 }
@@ -1628,7 +1628,7 @@ section {
   left: 20px;
   top: 20px;
   font-size: 36px;
-  color: #e7e7e7;
+  color: #aaaaaa;
 }
 
 .blog .entry .entry-content blockquote .quote-right {
@@ -1636,7 +1636,7 @@ section {
   right: 20px;
   bottom: 20px;
   font-size: 36px;
-  color: #e7e7e7;
+  color: #aaaaaa;
 }
 
 .blog .entry .entry-content blockquote::after {

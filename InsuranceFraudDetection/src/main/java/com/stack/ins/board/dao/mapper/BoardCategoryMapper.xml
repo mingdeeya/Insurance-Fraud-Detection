@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.stack.ins.dao.IBoardCategoryRepository">
+<mapper namespace="com.stack.ins.board.dao.IBoardCategoryRepository">
 
 	<select id="selectAllCategory" resultType="com.stack.ins.board.model.BoardCategory">
 	<![CDATA[
