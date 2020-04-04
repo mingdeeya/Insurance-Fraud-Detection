@@ -8,6 +8,21 @@
 <jsp:include page="/WEB-INF/views/include/header.jsp"/>
   <main id="main">
 
+    <!-- ======= Header Section ======= -->
+    <section class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>QnA</h2>
+          <ol>
+            <li><a href="../">Home</a></li>
+            <li>QnA</li>
+          </ol>
+        </div>
+
+      </div>
+    </section><!-- End Header Section -->
+    
 <!-- ======= Contact Section ======= -->
 <section class="blog" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500" style="margin-top:8%; margin-bottom:4%">
      <div class="container" style="margin-bottom:10px">
@@ -73,13 +88,6 @@
           </div>
     </div>    
 </section>
-
-    <!-- ======= Map Section ======= -->
-    <section class="map mt-2">
-      <div class="container-fluid p-0">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.2219901290355!2d-74.00369368400567!3d40.71312937933185!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a23e28c1191%3A0x49f75d3281df052a!2s150%20Park%20Row%2C%20New%20York%2C%20NY%2010007%2C%20USA!5e0!3m2!1sen!2sbg!4v1579767901424!5m2!1sen!2sbg" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
-      </div>
-    </section><!-- End Map Section -->
 
   </main><!-- End #main -->
     <jsp:include page="/WEB-INF/views/include/footer.jsp"/>

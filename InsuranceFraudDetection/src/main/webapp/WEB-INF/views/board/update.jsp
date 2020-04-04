@@ -1,12 +1,33 @@
-<%@ page contentType="text/html; charset=utf-8" trimDirectiveWhitespaces="true"%>
-<!DOCTYPE html> 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html; charset=utf-8" trimDirectiveWhitespaces="true" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setBundle basename="i18n/board" />
-<html>
+<html lang="en">
 <jsp:include page="/WEB-INF/views/include/staticFiles.jsp"/>
+
 <body>
 <jsp:include page="/WEB-INF/views/include/header.jsp"/>
+
+  <main id="main">
+
+    <!-- ======= Header Section ======= -->
+    <section class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>QnA</h2>
+          <ol>
+            <li><a href="../">Home</a></li>
+            <li>QnA</li>
+          </ol>
+        </div>
+
+      </div>
+    </section><!-- End Header Section -->
+
+    <!-- ======= Board Section ======= -->
+    <section class="team" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
+
 <div class="container">
 	<div class="pg-opt">
         <div class="row">
@@ -86,6 +107,16 @@
 	</form>
 	</div>
 </div>
-<jsp:include page="/WEB-INF/views/include/footer.jsp"/>
+
+    </section><!-- End Board Section -->
+
+  </main><!-- End #main -->
+   <jsp:include page="/WEB-INF/views/include/footer.jsp"/>
+  <jsp:include page="/WEB-INF/views/include/staticJsp.jsp"/>
+  <!-- 위 코드 고정 시키기   -->
+  <script type="text/javascript">
+  	document.getElementById('header').setAttribute('class', 'fixed-top')
+  </script>
 </body>
+
 </html>
