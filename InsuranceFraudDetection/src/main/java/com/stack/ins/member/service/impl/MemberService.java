@@ -43,6 +43,7 @@ public class MemberService implements IMemberService {
 	public void saveDeleteMember(String userId) {
 		// TODO Auto-generated method stub
 		memberDao.saveDeleteMember(userId);
+		
 
 	}
 

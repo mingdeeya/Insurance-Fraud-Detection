@@ -48,9 +48,9 @@
         <div class="content">
         <form action="<c:url value='/member/insert'/>" method="post" id="joinForm" class="form-horizontal">
         <div class="form-group">
-            <label class="control-label col-sm-2" for="userId"><fmt:message key="MEMBER_ID"/></label>
+            <label class="control-label col-sm-2" for="userId">사용자 아이디</label>
             <div class="col-sm-4">
-              <input type="text" name="userId" id="userId" value="${member['userId']}" ${empty member.userId ? "" : "readonly"} title="사용자 아이디" pattern="\w+" class="form-control" placeholder="<fmt:message key="MEMBER_ID"/>" required></input> 
+              <input type="text" name="userId" id="userId" value="${member['userId']}" ${empty member.userId ? "" : "readonly"} title="USER_TITLE" pattern="\w+" class="form-control" placeholder="" required></input> 
             </div>
           </div>
         <div class="form-group">
@@ -84,8 +84,8 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="control-label col-sm-2" for="birth"><fmt:message key="MEMBER_EMAIL"/></label>
-            <div class="col-sm-8">
+            <label class="control-label col-sm-2" for="birth">생일</label>
+            <div class="col-sm-2">
               <input type="date" name="birth" id="birth" value="${member.birth}" class="form-control" required>
             </div>
           </div>
@@ -112,10 +112,8 @@
 
     <!-- ======= Tetstimonials Section ======= -->
  
-
-  </main><!-- End #main -->
-
- ${memberList.userId}	
+<c:set var="memberList" value="${memberList}"/>
+  </main><!-- End #main -->	
 <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
   <jsp:include page="/WEB-INF/views/include/footer.jsp"/>
   <jsp:include page="/WEB-INF/views/include/staticJsp.jsp"/>
@@ -135,14 +133,14 @@
     var checkForm = function(e)
     {
       if(this.username.value == "") {
-        alert("Error: Username cannot be blank!");
+        alert("Error: 아이디를 입력하지 않았습니다.");
         this.username.focus();
         e.preventDefault(); // equivalent to return false
         return;
       }
       re = /^\w+$/;
       if(!re.test(this.username.value)) {
-        alert("Error: Username must contain only letters, numbers and underscores!");
+        alert("Error: 아이디는 문자, 숫자, 언더스코어만 사용이 가능 합니다!");
         this.username.focus();
         e.preventDefault();
         return;
@@ -184,7 +182,9 @@
       var pwd2Input = document.getElementById("password_re");
 
       // input key handlers
-
+	  usernameInput.onchange = function(){
+    	  alert("내용이 바꼇습니다.");
+      }
       usernameInput.addEventListener("keyup", function() {
         usernameInput.setCustomValidity(this.validity.patternMismatch ? usernameInput.title : "");
       }, false);
@@ -207,6 +207,20 @@
     }
 
   }, false);
+  	
+/*  document.getElementById('userId').onchange = function () {
+	 <c:forEach items="${memberList}" var="member">
+		${member.userId}
+	 </c:forEach> 
+	
+} */
+
+/*  document.getElementById('userId').onfocus = function(){
+
+ }  */
+ 
+
+
   </script>
 </body>
 </html>

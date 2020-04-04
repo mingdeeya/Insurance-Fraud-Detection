@@ -87,13 +87,13 @@
   <jsp:include page="/WEB-INF/views/include/staticJsp.jsp"/>
   <script type="text/javascript">
   	document.getElementById('header').setAttribute('class', 'fixed-top')
-  	document.getElementById('before-submit').onclick = function(){
+/*   	document.getElementById('before-submit').onclick = function(){
   		 if (confirm("정말 삭제하시겠습니까??") == true){    //확인
   		      document.form.submit();
   		  }else{   //취소
   		      return;
   		  }
-  	}
+  	} */
   </script>
 </body>
 </html>

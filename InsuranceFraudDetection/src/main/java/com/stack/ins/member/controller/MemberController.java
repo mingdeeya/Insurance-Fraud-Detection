@@ -27,36 +27,48 @@ public class MemberController {
 	@Autowired
 	IMemberService memberService;
 	
-	@GetMapping(value="/member/admin")
-	public String showMemberList(Model model) {
-		List<Member> memberList = memberService.selectAllMembers();
-		model.addAttribute("memberList", memberList);
-		return "member/admin";
-	}
+	/*
+	 * @GetMapping(value="/admin") public String showMemberList(Model model) {
+	 * List<Member> memberList = memberService.selectAllMembers();
+	 * model.addAttribute("memberList", memberList); return "member/admin"; }
+	 */
+	
 	
 	
 	// 회원 가입 폼으로 가기
 	@GetMapping(value="/member/insert")
-	public String insertFrom() {
+	public String insertFrom(Model model) {
+		
+		List<Member> memberList = memberService.selectAllMembers();
+		model.addAttribute("memberList", memberList);
 		return "member/insert";
 	}
 	
 	@PostMapping(value="/member/insert")
 	public String insertMember(String userId, String name, String password, String email, String phone, @RequestParam("birth") @DateTimeFormat(pattern="yyyy-MM-dd") Date birth, Model model) {
-		Member member = new Member();
-		member.setUserId(userId);
-		member.setName(name);
-		member.setPassword(password);
-		member.setEmail(email);
-		member.setPhone(phone);
-		member.setBirth(birth);
-		System.out.println(member);
-		memberService.insertMember(member);
 		
-		model.addAttribute("message", "회원가입 완료!");
-		System.out.println("회원가입된 호원 정보  =" + member);
+		try {
+			Member member = new Member();
+			member.setUserId(userId);
+			member.setName(name);
+			member.setPassword(password);
+			member.setEmail(email);
+			member.setPhone(phone);
+			member.setBirth(birth);
+			System.out.println(member);
+			memberService.insertMember(member);
+			
+			model.addAttribute("message", "회원가입 완료!");
+			System.out.println("회원가입된 호원 정보  =" + member);
 
-		return "member/login";
+			return "redirect:/member/login";
+		} catch (Exception e) {
+			model.addAttribute("message", "이미 사용하고 있는 아이디,이메일 입니다.");
+			e.printStackTrace();
+			return "common/error";
+		}
+		
+
 	}
 //   how to post in date
 //	@PostMapping(value="/member/insert")
@@ -111,7 +123,7 @@ public class MemberController {
 				}
 			}
 		}else {
-			model.addAttribute("message", "아이디가 존재하지 않습니.");
+			model.addAttribute("message", "아이디가 존재하지 않습니다.");
 		}
 		session.invalidate();	
 		return "member/login";
@@ -131,27 +143,35 @@ public class MemberController {
 			return "member/delete";
 		}else {
 			//userid가 세션에 없을 경우 (로그인 하지 않았을 경우)
-			model.addAttribute("message", "NOT_LOGIN_USER");
+			model.addAttribute("message", "로그인을 하지 않았습니다.");
 			return "member/login";
 		}
 	}
 	@PostMapping(value="/member/delete")
 	public String deleteMember(String password, String userId, HttpSession session, Model model) {
 	
+		
+		try {
+//			System.out.println(member.toString());
+				Member member = memberService.selectMember(userId);
+				if(password != null && password.equals(member.getPassword())) {
+					
+					memberService.saveDeleteMember(userId);
+					model.addAttribute("message", "회원 탈퇴 성공!");
+					session.invalidate();
+					return "member/login";
+				}else {
+					model.addAttribute("message", "비밀번호가 틀립니다.");
+					model.addAttribute("member", member);
+					return "member/delete";
+				}
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("message", "에러 입니다. 관리자에게 문의하세요");
+			return "common/error";
+		}
+		
 
-//		System.out.println(member.toString());
-			Member member = memberService.selectMember(userId);
-			if(password != null && password.equals(member.getPassword())) {
-				
-				memberService.saveDeleteMember(userId);
-				model.addAttribute("message", "회원 탈퇴 성공!");
-				session.invalidate();
-				return "redirect:/";
-			}else {
-				model.addAttribute("message", "비밀번호가 틀립니다.");
-				model.addAttribute("member", member);
-				return "member/delete";
-			}
 
 		
 	}
