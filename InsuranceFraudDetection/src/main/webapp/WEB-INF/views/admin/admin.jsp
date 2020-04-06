@@ -43,7 +43,7 @@
  	</div>
 <table class="table">
 
-  <thead>
+  <thead class="thead-dark">
     <tr>
    	  <th scope="col">userNum</th>
       <th scope="col">userId</th>
@@ -75,7 +75,7 @@
 			<td>삭제</td>
 			</c:if>
 			<c:if test="${member.delCount==0}">
-			<td><button class="btn btn-danger">삭제</button></td>
+			<td><button class="btn btn-dark">삭제</button></td>
 			</c:if>
 			<c:if test="${member.delCount==1}">
 			<td><button class="btn btn-info">복구</button></td>

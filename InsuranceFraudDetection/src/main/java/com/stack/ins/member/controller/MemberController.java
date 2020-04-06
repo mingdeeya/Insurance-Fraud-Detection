@@ -111,10 +111,12 @@ public class MemberController {
 		
 				if(dbPassword.equals(password)) {
 					//비밀번호 일치
+					
 					session.setAttribute("userId", userId);
 					session.setAttribute("name", member.getName());
 					session.setAttribute("email", member.getEmail());
 					session.setAttribute("birth", member.getBirth());
+					model.addAttribute("member", member);
 					model.addAttribute("message", "환영 합니다!");
 						return "member/login";
 				}else {

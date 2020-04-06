@@ -24,7 +24,7 @@ IMemberService memberService;
 	public String showMemberList(Model model) {
 		List<Member> memberList = memberService.selectAllMembers();
 		model.addAttribute("memberList", memberList);
-		return "admin/admin";
+		return "admin/admin2";
 	}
 	
 
