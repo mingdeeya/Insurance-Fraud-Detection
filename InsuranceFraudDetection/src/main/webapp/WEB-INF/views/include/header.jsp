@@ -4,7 +4,7 @@
 
   <!-- ======= Header의 네비게이션 바  ======= -->
   
-  										<!--header-transparent 를 처리 해야댐   -->
+  <!--header-transparent 를 처리 해야댐   -->
   <header id="header" class="fixed-top header-transparent">
     <div class="container">
 
@@ -22,7 +22,7 @@
           <li><a href="<c:url value='/portfolio'/>">Portfolio</a></li>
           <li><a href="<c:url value='/team'/>">team</a></li>
           <li><a href="<c:url value='/services'/>">services</a></li>
-          <li class="drop-down"><a href="<c:url value='/'/>">뀨</a>
+          <!-- <li class="drop-down"><a href="<c:url value='/'/>">뀨</a>
             <ul>
               <li><a href="#">Drop Down 1</a></li>
               <li class="drop-down"><a href="#">Drop Down 2</a>
@@ -40,10 +40,10 @@
             </ul>
           
           </li>
-          
+           -->
           <c:if test="${empty sessionScope.userId}">
           <li><a href="<c:url value='/member/login'/>">로그인</a></li>
-          </c:if>>
+          </c:if>
           <c:if test="${not empty sessionScope.userId}">
           <li><a href="<c:url value='/member/login'/>">My Page</a></li>
           </c:if>

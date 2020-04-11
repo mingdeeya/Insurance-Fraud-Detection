@@ -8,34 +8,42 @@
 <jsp:include page="/WEB-INF/views/include/staticFiles.jsp"/>
 <body>
 <jsp:include page="/WEB-INF/views/include/header.jsp"/>
+
+<main id="main">
+<!-- ======= Board List Section ======= -->
+<section class="breadcrumbs">
+      <div class="container">
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Q & A</h2>
+          <ol>
+            <li><a href="./">Home</a></li>
+            <li>Q & A</li>
+          </ol>
+        </div>
+      </div>
+</section>    
+<!-- End Board List Section -->
+
+<section class="blog" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500" style="margin-bottom:4%">
 <div class="container">
 	<div class="pg-opt">
-	    <div class="row">
-	        <div class="col-md-6 pc" style="margin-top:13%">
-	            <h2><fmt:message key="BOARD_LIST"/> 
-	            <c:if test="${empty name}">
-	            <small style="color:red;"><fmt:message key="LOGIN"/></small>
-	            </c:if>
-	            </h2>
+	     <div class="row">
+	           <div class="col-md-6 pc">
+		            <h2><fmt:message key="BOARD_LIST"/> 
+		            <c:if test="${empty name}">
+		            <small style="color:red;"><fmt:message key="LOGIN"/></small>
+		            </c:if>
+		            </h2>
+		        </div>
+		        <div class="col-md-6">
+		            <ol class="breadcrumb">
+		                <li><fmt:message key="BOARD"/> 게시판 검색</li>
+		            </ol>
+		        </div>
 	        </div>
-	        <div class="col-md-6">
-	            <ol class="breadcrumb">
-	                <li><fmt:message key="BOARD"/></li>
-	                <li class="active"><fmt:message key="BOARD_LIST"/></li>
-	            </ol>
-	        </div>
-	    </div>
-    </div>
+	    </div>        
 	${message}
 	<div class="content">
-		<form action="<c:url value='/board/search'/>" method="get">
-			<div class="pull-right" style="margin-bottom: 5px;">
-			<div class="col-xs-9">
-		        <input type="text" name="keyword" class="form-control">
-		    </div>
-		        <input type="submit" class="btn btn-warning" value="<fmt:message key="SEARCH"/>">
-			</div>
-		</form>
 	    <table class="table table-hover table-bordered">
 		<thead>
 		<tr>
@@ -78,6 +86,8 @@
 		</table>
 	</div>
 </div>
+</section>
+</main>
     <jsp:include page="/WEB-INF/views/include/footer.jsp"/>
   <jsp:include page="/WEB-INF/views/include/staticJsp.jsp"/>
   
