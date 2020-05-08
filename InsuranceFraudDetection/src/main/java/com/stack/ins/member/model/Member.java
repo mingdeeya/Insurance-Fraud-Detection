@@ -14,8 +14,22 @@ public class Member {
 	private Date birth;
 	private Date insertDay;
 	private Date delDay;
+	private int custManagerId;
+	private int custId;
 	
 	
+	public int getCustManagerId() {
+		return custManagerId;
+	}
+	public int getCustId() {
+		return custId;
+	}
+	public void setCustManagerId(int custManagerId) {
+		this.custManagerId = custManagerId;
+	}
+	public void setCustId(int custId) {
+		this.custId = custId;
+	}
 	public int getUserNum() {
 		return userNum;
 	}
@@ -81,8 +95,10 @@ public class Member {
 	public String toString() {
 		return "Member [userNum=" + userNum + ", userId=" + userId + ", name=" + name + ", password=" + password
 				+ ", email=" + email + ", phone=" + phone + ", delCount=" + delCount + ", birth=" + birth
-				+ ", insertDay=" + insertDay + ", delDay=" + delDay + "]";
+				+ ", insertDay=" + insertDay + ", delDay=" + delDay + ", custManagerId=" + custManagerId + ", custId="
+				+ custId + "]";
 	}
+	
 
 	
 	

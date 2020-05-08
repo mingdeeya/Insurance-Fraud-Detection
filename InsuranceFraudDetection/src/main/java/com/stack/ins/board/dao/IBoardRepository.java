@@ -2,6 +2,8 @@ package com.stack.ins.board.dao;
 
 import java.util.List;
 
+
+
 import org.apache.ibatis.annotations.Param;
 
 import com.stack.ins.board.model.Board;
@@ -9,6 +11,7 @@ import com.stack.ins.board.model.BoardFile;
 
 
 public interface IBoardRepository {
+	
 	int selectMaxArticleNo();
 	
 	void insertArticle(Board board);

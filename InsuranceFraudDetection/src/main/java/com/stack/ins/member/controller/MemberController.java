@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.stack.ins.member.model.Member;
 import com.stack.ins.member.service.IMemberService;
 
-import aj.org.objectweb.asm.Type;
 
 @Controller
 public class MemberController {
-
+	
+	
 	@Autowired
 	IMemberService memberService;
 	
@@ -36,6 +36,7 @@ public class MemberController {
 	
 	
 	// 회원 가입 폼으로 가기
+
 	@GetMapping(value="/member/insert")
 	public String insertFrom(Model model) {
 		
@@ -43,7 +44,7 @@ public class MemberController {
 		model.addAttribute("memberList", memberList);
 		return "member/insert";
 	}
-	
+
 	@PostMapping(value="/member/insert")
 	public String insertMember(String userId, String name, String password, String email, String phone, @RequestParam("birth") @DateTimeFormat(pattern="yyyy-MM-dd") Date birth, Model model) {
 		
@@ -91,11 +92,13 @@ public class MemberController {
 
 
 	// 로그인 폼으로 가기 
+
 	@GetMapping(value="/member/login")
 	public String loginFrom() {
 		return "member/login";
 	}
 	// 로그인 하기 
+
 	@PostMapping(value="/member/login")
 	public String login(String userId, HttpSession session, String password, Model model) {
 		Member member = memberService.selectMember(userId);
@@ -111,11 +114,12 @@ public class MemberController {
 		
 				if(dbPassword.equals(password)) {
 					//비밀번호 일치
-					
+					System.out.println("member.getCustManagerId():"+member.getCustManagerId());
 					session.setAttribute("userId", userId);
 					session.setAttribute("name", member.getName());
 					session.setAttribute("email", member.getEmail());
 					session.setAttribute("birth", member.getBirth());
+					session.setAttribute("custManagerId", member.getCustManagerId());
 					model.addAttribute("member", member);
 					model.addAttribute("message", "환영 합니다!");
 						return "member/login";
@@ -130,11 +134,13 @@ public class MemberController {
 		session.invalidate();	
 		return "member/login";
 	}
+
 	@GetMapping(value="/member/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "member/login";
 	}
+
 	@RequestMapping(value="/member/delete", method=RequestMethod.GET)
 	public String deleteMember(HttpSession session, Model model) {
 		String userId = (String)session.getAttribute("userId");
@@ -149,6 +155,7 @@ public class MemberController {
 			return "member/login";
 		}
 	}
+
 	@PostMapping(value="/member/delete")
 	public String deleteMember(String password, String userId, HttpSession session, Model model) {
 	
@@ -203,6 +210,7 @@ public class MemberController {
 //	}
 
 	// 업데이트 페이지로 가기 
+
 	@GetMapping(value="/member/update")
 	public String updateMember(HttpSession session, Model model) {
 		String userId = (String)session.getAttribute("userId");
@@ -216,7 +224,7 @@ public class MemberController {
 		}
 		return "member/login";
 	}
-	
+
 	@PostMapping(value="/member/update")
 	public String updateMember(Member member , HttpSession session, Model model) {
 		try {

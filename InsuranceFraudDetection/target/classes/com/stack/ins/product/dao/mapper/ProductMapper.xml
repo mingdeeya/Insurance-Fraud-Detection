@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+   
+ <mapper namespace="com.stack.ins.product.dao.IProductRepository">
+	<!--                       INSERT                      -->
+	
+	<insert id="insertCustData" parameterType="com.stack.ins.product.model.Cust">
+ 		<![CDATA[
+			INSERT INTO CUST_DATA
+			(DIVIDED_SET,SIU_CUST_YN,
+			 SEX,AGE,RESI_COST,RESI_TYPE_CODE,
+			 CTPR,OCCP_GRP_1,TOTALPREM,WEDD_YN,
+			 MATE_OCCP_GRP_1,CHLD_CNT,LTBN_CHLD_AGE,
+			 MAX_PRM,CUST_INCM,RCBASE_HSHD_INCM,JPBASE_HSHD_INCM)
+			VALUES
+			(2, null, #{sex}, #{age}, #{resiCost}, #{resiTypeCode}, #{ctpr}, #{occpGrp1}, #{totalPrem}, #{weddYn}
+			, #{mateOccpGrp1}, #{chldCnt}, #{ltbnChldAge}, #{maxPrm}, #{custIncm}, #{rcbaseHshdIncm},#{jpbaseHshdIncm});
+ 		]]>
+	</insert>
+ 	
+ 	<select id="selectLastDataNumber" resultType="int">
+ 		<![CDATA[
+			SELECT MAX(CUST_ID)
+			FROM CUST_DATA 		
+ 		]]>
+ 	</select>
+ 	
+ </mapper>

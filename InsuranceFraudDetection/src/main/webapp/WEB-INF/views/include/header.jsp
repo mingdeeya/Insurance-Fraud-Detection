@@ -21,7 +21,7 @@
           <li><a href="<c:url value='/board/cat/1'/>">board</a></li>
           <li><a href="<c:url value='/portfolio'/>">Portfolio</a></li>
           <li><a href="<c:url value='/team'/>">team</a></li>
-          <li><a href="<c:url value='/services'/>">services</a></li>
+          <li><a href="<c:url value='/product/services'/>">services</a></li>
           <!-- <li class="drop-down"><a href="<c:url value='/'/>">뀨</a>
             <ul>
               <li><a href="#">Drop Down 1</a></li>

@@ -3,6 +3,7 @@ package com.stack.ins.board.controller;
 import java.nio.charset.Charset;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -30,10 +31,17 @@ import com.stack.ins.board.service.IBoardService;
 
 @Controller
 public class BoardController {
+	
+	
 	static final Logger logger = Logger.getLogger(BoardController.class);
-
+	
+	
+	
+	
 	@Autowired
 	IBoardService boardService;
+	
+	
 	
 	@Autowired
 	IBoardCategoryService categoryService;

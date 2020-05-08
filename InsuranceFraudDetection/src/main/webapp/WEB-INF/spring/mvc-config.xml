@@ -6,7 +6,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
-	
+	<!-- 아노테이션을 사용하기위한 태그 -->
 	<mvc:annotation-driven/>
 	
 	<!-- ViewResolver mapping bean -->
@@ -22,7 +22,7 @@
 	<mvc:view-controller path="/board" view-name="board"/>
 	<mvc:view-controller path="/contact" view-name="contact"/>
 	<mvc:view-controller path="/team" view-name="team"/>
-	<mvc:view-controller path="/services" view-name="services"/>
+	<!-- <mvc:view-controller path="/services" view-name="services"/> -->
 	<mvc:view-controller path="/portfolio" view-name="portfolio"/>
 	
 	<mvc:resources location="/WEB-INF/resources/" mapping="/**"/>
@@ -40,7 +40,25 @@
 		</property>
 	</bean>
 	<!--  컨트롤러 컴포넌트 스켄  -->
+	<context:component-scan base-package="com.stack.ins.product.controller"/>
 	<context:component-scan base-package="com.stack.ins.member.controller"/>
 	<context:component-scan base-package="com.stack.ins.board.controller"/>
 	<context:component-scan base-package="com.stack.ins.admin.controller"/>
+	<!--  -->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+	<property name="messageConverters">
+		<list>
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/html;charset=UTF-8</value>
+						<value>application/json;charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
+		</list>
+	</property>
+</bean>
+	
 </beans>

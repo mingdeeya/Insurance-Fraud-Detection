@@ -48,7 +48,7 @@
             </a>
           </li>
           <li>
-            <a href="<c:url value='/admin/table'/>">
+            <a href="<c:url value='/admin/table/1'/>">
               <i class="nc-icon nc-tile-56"></i>
               <p>Table List</p>
             </a>

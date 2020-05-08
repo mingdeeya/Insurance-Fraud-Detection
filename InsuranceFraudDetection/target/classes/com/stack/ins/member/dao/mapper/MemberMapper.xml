@@ -6,14 +6,33 @@
  <mapper namespace="com.stack.ins.member.dao.IMemberRepository">
 	<!--                       INSERT                      -->
 	
-	<!-- 회원 가입 시키기  -->
+	<!-- 고객 정보 넣기  -->
  	<insert id="insertMember" parameterType="com.stack.ins.member.model.Member">
  		<![CDATA[
 			INSERT INTO MEMBER
-			     (USERNUM ,USERID, NAME, PASSWORD, EMAIL, PHONE, DELETECOUNT, BIRTH)
-			VALUES(SEQ_MEMBER.NEXTVAL, #{userId}, #{name}, #{password}, #{email}, #{phone}, 0, #{birth})    
+			     (USERNUM ,USERID, NAME, PASSWORD, EMAIL, PHONE, DELETECOUNT, BIRTH, CUST_MANAGER_ID)
+			VALUES(SEQ_MEMBER.NEXTVAL, #{userId}, #{name}, #{password}, #{email}, #{phone}, 0, #{birth}, SEQ_MEMBER.NEXTVAL)    
  		]]>
  	</insert>
+ 	
+ 	<!-- cust_id 값 넣기 -->
+ 	<insert id="insertCustId" parameterType="map">
+ 		<![CDATA[
+			INSERT INTO CUST_MANAGER
+			(CUST_MANAGER_ID, CUST_ID)
+			VALUES(#{custManagerId}, #{custId})    
+ 		]]>
+ 	</insert>
+ 	
+ 	<!-- cust_id 가져오기  조회하기 -->
+ 	<select id="getCustId" parameterType="int" resultType="com.stack.ins.member.model.CustManager">
+ 		<![CDATA[
+			SELECT CUST_MANAGER_ID AS "custManagerId", 
+				   CUST_ID         AS "custId"
+			FROM CUST_MANAGER
+			WHERE CUST_MANAGER_ID = #{custManagerId}	 		
+ 		]]>
+ 	</select>
  	
  	
  	<!--                		 SELECT                    -->
@@ -30,7 +49,8 @@
 			    DELETECOUNT         AS "delCount",
 			    BIRTH               AS "birth",
                 INSERTDAY           AS "insertDay",
-                DELETEDAY           AS "delDay"
+                DELETEDAY           AS "delDay",
+                CUST_MANAGER_ID     AS "custManagerId"
 			FROM MEMBER
 			WHERE USERID = #{userId}
  		
@@ -49,8 +69,10 @@
 			    DELETECOUNT         AS "delCount",
 			    BIRTH               AS "birth",
                 INSERTDAY           AS "insertDay",
-                DELETEDAY           AS "delDay"
+                DELETEDAY           AS "delDay",
+                CUST_MANAGER_ID     AS "custManagerId"
 			FROM MEMBER
+			ORDER BY USERNUM
  		]]>
  	</select>	
  	<!-- 패스워드 찾기 -->
@@ -63,7 +85,7 @@
  		]]> 	
  	</select>
  	<!-- DB에서 삭제된  회원 정보 가져오기  -->
- 	<select id="getDeleteMember" resultType="com.stack.ins.member.model.Member">
+ 	<select id="getDeleteMember" resultType="com.stack.ins.member.model.Member" parameterType="int">
  		<![CDATA[
 			SELECT 
 				USERNUM             AS "userNum", 
@@ -76,11 +98,37 @@
 			    BIRTH               AS "birth",
                 INSERTDAY           AS "insertDay",
                 DELETEDAY           AS "delDay"
+                CUST_MANAGER_ID     AS "custManagerId"
 			FROM MEMBER
-			WHERE DELETECOUNT = 1
+			WHERE DELETECOUNT = #{delCount}
  		]]>
  	</select>
- 	
+ 	<!-- 모든 회원 수 조회  -->
+ 	<select id="getAllMemberCount" parameterType="int" resultType="int">
+ 		<![CDATA[
+ 			SELECT COUNT(DELETECOUNT) FROM MEMBER
+ 			
+ 		]]>
+ 	</select>
+ 	 	<select id="selectLimitMembers" parameterType="map"  resultType="com.stack.ins.member.model.Member">
+ 		<![CDATA[ 
+			SELECT
+				USERNUM             AS "userNum", 
+			    USERID              AS "userId",
+			    NAME                AS "name",
+			    PASSWORD            AS "password",
+			    EMAIL               AS "email",
+			    PHONE               AS "phone",
+			    DELETECOUNT         AS "delCount",
+			    BIRTH               AS "birth",
+                INSERTDAY           AS "insertDay",
+                DELETEDAY           AS "delDay"
+                CUST_MANAGER_ID     AS "custManagerId"
+			FROM MEMBER
+			WHERE USERNUM  BETWEEN  #{start} AND #{end}
+			ORDER BY USERNUM
+ 		]]>
+ 	</select>
  	
  	
  	<!--                           UPDATE                      -->
